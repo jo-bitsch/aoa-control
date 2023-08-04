@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AOA Control</string>
+    <string name="version">Version</string>
+    <string name="title_activity_main2">MainActivity2</string>
+</resources>
