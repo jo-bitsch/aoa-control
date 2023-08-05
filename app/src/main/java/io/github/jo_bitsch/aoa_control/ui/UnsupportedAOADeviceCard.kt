@@ -35,7 +35,7 @@ import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 class UnsupportedAOADeviceCardSampleProvider : PreviewParameterProvider<UsbAccessoryData> {
     override val values: Sequence<UsbAccessoryData>
         get() {
-            return sequenceOf<UsbAccessoryData>(
+            return sequenceOf(
                 /**
                  * aoa-proxy --port 3-1 --announce \
                  *     --manufacturer MangoPi \

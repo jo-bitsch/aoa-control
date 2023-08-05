@@ -11,7 +11,7 @@ import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 class SampleAccessoryProvider : PreviewParameterProvider<UsbAccessoryData?> {
     override val values: Sequence<UsbAccessoryData?>
         get() {
-            return sequenceOf<UsbAccessoryData?>(
+            return sequenceOf(
                 UsbAccessoryData(
                     "aoa-proxy",
                     "Raspberry Pi v4\nconsole",

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ressources xmlns:android="http://schemas.android.com/apk/res/android">
+<ressources>
     <usb-accessory manufacturer="aoa-proxy"/>
 </ressources>

@@ -46,7 +46,7 @@ class AOAtoOutput(
             }
         }
 
-        val TAG = "AOAtoOutput"
+        private const val TAG = "AOAtoOutput"
     }
 
 }

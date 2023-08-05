@@ -111,9 +111,6 @@ class AOAProxy : Service() {
             val manager = (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
             manager.createNotificationChannel(chan)
             val notificationBuilder = NotificationCompat.Builder(this, notificationChannelId)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                notificationBuilder.foregroundServiceBehavior = Notification.FOREGROUND_SERVICE_IMMEDIATE
-            }
             val notification = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Android Open Accessory connected")

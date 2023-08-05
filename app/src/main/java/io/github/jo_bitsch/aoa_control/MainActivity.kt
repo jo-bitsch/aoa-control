@@ -10,7 +10,6 @@ import android.hardware.usb.UsbManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.ParcelFileDescriptor
 import android.os.StrictMode
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -43,10 +42,6 @@ import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData.Companion.usbAcces
 private const val ACTION_USB_PERMISSION = "io.github.jo_bitsch.USB_PERMISSION"
 
 class MainActivity : ComponentActivity() {
-
-    companion object {
-        var parcelFileDescriptor: ParcelFileDescriptor? = null
-    }
 
     private val manager: UsbManager by lazy {
         getSystemService(Context.USB_SERVICE) as UsbManager

@@ -37,9 +37,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startForegroundService
 import io.github.jo_bitsch.aoa_control.R
-import io.github.jo_bitsch.aoa_control.service.AOAProxy
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 class AOAProxyDeviceCardSampleProvider : PreviewParameterProvider<UsbAccessoryData?> {
     override val values: Sequence<UsbAccessoryData?>
@@ -61,7 +59,7 @@ class AOAProxyDeviceCardSampleProvider : PreviewParameterProvider<UsbAccessoryDa
         }
 }
 
-@Preview()
+@Preview
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbAccessory: UsbAccessoryData){
