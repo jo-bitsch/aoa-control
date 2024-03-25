@@ -39,7 +39,7 @@ import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData.Companion.usbAccessoryData
 
 
-private const val ACTION_USB_PERMISSION = "io.github.jo_bitsch.USB_PERMISSION"
+const val ACTION_USB_PERMISSION = "io.github.jo_bitsch.USB_PERMISSION"
 
 class MainActivity : ComponentActivity() {
 
@@ -56,6 +56,17 @@ class MainActivity : ComponentActivity() {
                 .detectLeakedClosableObjects()
                 .build()
         )
+
+        val usbReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (UsbManager.ACTION_USB_ACCESSORY_DETACHED == intent.action) {
+                    finishAndRemoveTask()
+                }
+            }
+        }
+        val filter = IntentFilter(ACTION_USB_PERMISSION)
+        filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED)
+        ContextCompat.registerReceiver(applicationContext,usbReceiver,filter,ContextCompat.RECEIVER_NOT_EXPORTED)
 
 
 
@@ -85,9 +96,9 @@ class MainActivity : ComponentActivity() {
                     else
                         0
                 )
-                val filter = IntentFilter(ACTION_USB_PERMISSION)
+                val intentFilter = IntentFilter(ACTION_USB_PERMISSION)
                 ContextCompat.registerReceiver(
-                    applicationContext, usbReceiver, filter,
+                    applicationContext, usbReceiver, intentFilter,
                     ContextCompat.RECEIVER_NOT_EXPORTED
                 )
 

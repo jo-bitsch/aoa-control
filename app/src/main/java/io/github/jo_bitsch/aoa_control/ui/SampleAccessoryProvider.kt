@@ -3,11 +3,7 @@ package io.github.jo_bitsch.aoa_control.ui
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 
-/**
- * aoa-proxy --port 3-1 --announce --manufacturer MangoPi --model "MPi-MQ1PL"  \
- *     --model-version "V1.4" --description "$(echo -e "MangoPi\nYour Tiny Tiny Tiny SBC")" \
- *     --url "https://mangopi.org/mqpro" --serial "123456U5678"
- */
+
 class SampleAccessoryProvider : PreviewParameterProvider<UsbAccessoryData?> {
     override val values: Sequence<UsbAccessoryData?>
         get() {

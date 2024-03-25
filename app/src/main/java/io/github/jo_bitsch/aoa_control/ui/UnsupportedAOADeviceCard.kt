@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -133,7 +133,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                         color = MaterialTheme.colorScheme.primary,
                     )
                 }
-                Divider()
+                HorizontalDivider()
                 Text(
                     text = "Manufacturer".uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -145,7 +145,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                     softWrap = true,
                     style = MaterialTheme.typography.bodySmall,
                 )
-                Divider(thickness = Dp.Hairline)
+                HorizontalDivider(thickness = Dp.Hairline)
                 Text(
                     text = "Model".uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -157,7 +157,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                     softWrap = true,
                     style = MaterialTheme.typography.bodySmall,
                 )
-                Divider(thickness = Dp.Hairline)
+                HorizontalDivider(thickness = Dp.Hairline)
                 Text(
                     text = "Version".uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -170,7 +170,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                     style = MaterialTheme.typography.bodySmall,
                 )
 
-                Divider(thickness = Dp.Hairline)
+                HorizontalDivider(thickness = Dp.Hairline)
                 Text(
                     text = "Description".uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -182,7 +182,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                     softWrap = true,
                     style = MaterialTheme.typography.bodySmall,
                 )
-                Divider(thickness = Dp.Hairline)
+                HorizontalDivider(thickness = Dp.Hairline)
                 Text(
                     text = "URI".uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -212,7 +212,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                         style = MaterialTheme.typography.bodySmall,
                     )
                 }
-                Divider(thickness = Dp.Hairline)
+                HorizontalDivider(thickness = Dp.Hairline)
                 Text(
                     text = "Serial".uppercase(),
                     color = MaterialTheme.colorScheme.primary,

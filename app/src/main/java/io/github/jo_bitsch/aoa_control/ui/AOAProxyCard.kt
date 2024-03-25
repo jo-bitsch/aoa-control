@@ -17,9 +17,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.jo_bitsch.aoa_control.R
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
+
 class AOAProxyDeviceCardSampleProvider : PreviewParameterProvider<UsbAccessoryData?> {
     override val values: Sequence<UsbAccessoryData?>
         get() {
@@ -101,7 +102,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                         color = MaterialTheme.colorScheme.primary,
                     )
                 }
-                Divider()
+                HorizontalDivider()
                 Text(
                     text = stringResource(id = R.string.version).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -124,7 +125,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                         Text(text = "none provided")
                     }
                 }
-                Divider(thickness = Dp.Hairline)
+                HorizontalDivider(thickness = Dp.Hairline)
                 Text(
                     text = "Identifiers".uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -146,7 +147,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                         Text(text = "none provided")
                     }
                 }
-                Divider(thickness = Dp.Hairline)
+                HorizontalDivider(thickness = Dp.Hairline)
                 Text(
                     text = "IP Addresses".uppercase(),
                     color = MaterialTheme.colorScheme.primary,
@@ -239,7 +240,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                     }
                 }
                 if (usbAccessory.services.isNotEmpty()){
-                    Divider()
+                    HorizontalDivider()
                     FlowRow (
                         modifier = Modifier.align(Alignment.End),
                         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)

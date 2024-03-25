@@ -4,8 +4,10 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ServiceInfo
 import android.graphics.Color
 import android.hardware.usb.UsbManager
@@ -15,9 +17,12 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import io.github.jo_bitsch.aoa_control.ACTION_USB_PERMISSION
 import io.github.jo_bitsch.aoa_control.R
 import java.io.FileOutputStream
 import java.io.IOException
+import java.net.InetAddress
 import java.net.ServerSocket
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -28,27 +33,31 @@ class AOAProxy : Service() {
     }
 
     private val working = AtomicBoolean(true)
-    private var thread: Thread? = null
+    var tcpToAOAThread: Thread? = null
+    private var aoaToTCPThread: Thread? = null
     private val runnable = Runnable {
         try {
             Log.i("Runnable", "Starting thread for proxying AOA stuff")
-        //    val aoAtoOutput = AOAtoOutput(manager, System.out)
-        //    aoAtoOutput.start()
+            val aoaDevice = manager.accessoryList?.first()
+            if (aoaDevice == null){
+                Log.i(TAG, "no AOA device connected")
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                stopSelf()
+                return@Runnable
+            }
             val pfd =  manager.openAccessory(manager.accessoryList?.first())
-//            Log.i(TAG, "Opening Server Socket")
-            val serverSocket = ServerSocket(PORT)
+            val serverSocket = ServerSocket(PORT,1, InetAddress.getLocalHost())
+
             // we explicitly only ever allow one single connection to be handled as afterwards
             // the state of the AOA Socket is ill defined
             val socket = serverSocket.accept()
-            val socketOut = socket.getOutputStream()
             val socketIn = socket.getInputStream()
 
-      //      Log.i("Runner", "pfd is $pfd")
             val localFd = pfd.fileDescriptor
-            val aoAtoOutput = AOAtoOutput(localFd,socket)
-            aoAtoOutput.start()
+            aoaToTCPThread = AOAtoOutput(localFd,socket, tcpToAOAThread)
+            aoaToTCPThread?.start()
             val outputStream = FileOutputStream(localFd)
-            var read = 0
+            var read: Int
             val buffer = ByteArray(8192)
             while (socketIn.read(buffer, 0, 8192)
                     .also { read = it } >= 0
@@ -57,11 +66,11 @@ class AOAProxy : Service() {
                 outputStream.write(buffer, 0, read)
                 outputStream.flush()
             }
-            aoAtoOutput.interrupt()
+            aoaToTCPThread?.interrupt()
             Log.i("DirectedStream","stop running")
             Log.i("Runner", "Done")
             Log.i(TAG, "Will not accept new server connections")
-            aoAtoOutput.join()
+            aoaToTCPThread?.join()
             outputStream.close()
             Log.i(TAG, "Connection joined")
         } catch (e: IOException) {
@@ -84,11 +93,27 @@ class AOAProxy : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startMeForeground()
 //        fd = intent?.getIntExtra("fd", 0) ?: 0
-        thread =  Thread(runnable)
-        thread?.priority = Thread.MAX_PRIORITY
-        thread?.name = "aoa data transfer"
-        thread?.isDaemon = true
-        thread?.start()
+        tcpToAOAThread =  Thread(runnable)
+        tcpToAOAThread?.priority = Thread.MAX_PRIORITY
+        tcpToAOAThread?.name = "aoa data transfer"
+        tcpToAOAThread?.isDaemon = true
+        tcpToAOAThread?.start()
+
+
+        val usbReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+
+                if (UsbManager.ACTION_USB_ACCESSORY_DETACHED == intent.action) {
+                    tcpToAOAThread?.interrupt()
+                    aoaToTCPThread?.interrupt()
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                    stopSelf()
+                }
+            }
+        }
+        val filter = IntentFilter(ACTION_USB_PERMISSION)
+        filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED)
+        ContextCompat.registerReceiver(applicationContext,usbReceiver,filter,ContextCompat.RECEIVER_NOT_EXPORTED)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -114,7 +139,7 @@ class AOAProxy : Service() {
             val notification = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Android Open Accessory connected")
-                .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                .setPriority(NotificationManager.IMPORTANCE_LOW)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -133,6 +158,6 @@ class AOAProxy : Service() {
 
     companion object {
         private val TAG = AOAProxy::class.java.simpleName
-        private const val PORT = 9876
+        private const val PORT = 0xA0A0  // almost spells out aoa0, currently unassigned port according to IANA and wikipedia
     }
 }

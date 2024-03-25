@@ -10,12 +10,13 @@ import java.net.SocketException
 class AOAtoOutput(
     fd: FileDescriptor,
     socket: Socket,
-) : Thread(handler(fd, socket)) {
+    otherThread: Thread?,
+) : Thread(handler(fd, socket, otherThread)) {
 
     companion object {
-        private fun handler(fd: FileDescriptor, socket: Socket): Runnable {
+        private fun handler(fd: FileDescriptor, socket: Socket, otherThread: Thread?): Runnable {
             return Runnable {
-                Log.i("DirectedStream","start running")
+                Log.i(TAG,"start running")
                 val inStream = FileInputStream(fd)
                 val outStream = socket.getOutputStream()
                 try {
@@ -24,7 +25,6 @@ class AOAtoOutput(
                     while (inStream.read(buffer, 0, 8192)
                             .also { read = it } >= 0
                     ) {
-                        Log.i(TAG, "read \"${buffer.decodeToString(0, read)}\"")
                         if (socket.isClosed or socket.isInputShutdown) {
                             Log.i(TAG, "shutting down")
                             socket.shutdownOutput()
@@ -39,6 +39,8 @@ class AOAtoOutput(
                     inStream.close()
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    Log.i(TAG, "IO exception happened, trying to shut down parent Thread $otherThread")
+                    otherThread?.interrupt()
                 } catch (e: NullPointerException){
                     e.printStackTrace()
                 }
