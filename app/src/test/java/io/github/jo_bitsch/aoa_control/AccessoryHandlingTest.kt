@@ -6,7 +6,8 @@ import android.hardware.usb.UsbManager
 import androidx.test.core.app.ApplicationProvider
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData.Companion.usbAccessoryData
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.doReturn

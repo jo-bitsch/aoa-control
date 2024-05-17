@@ -246,7 +246,20 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
                     ) {
                         for(service in usbAccessory.services) {
-                            Button(onClick = { /*TODO*/ }) {
+                            Button(onClick = {
+                                when (service) {
+                                    UsbAccessoryData.ServiceTypes.Console -> {
+                                        context.startActivity(
+                                            Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse("telnet://127.0.0.1:41120/#aoa-telnet")
+                                            )
+                                        )
+                                    }
+
+                                    else -> {/* TODO */}
+                                }
+                            }) {
                                 Text(text = service.name)
                             }
                         }
