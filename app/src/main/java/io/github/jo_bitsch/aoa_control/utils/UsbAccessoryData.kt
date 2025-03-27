@@ -91,6 +91,7 @@ data class UsbAccessoryData(
          * First bytes on the wire: ""
          * Could be anything. We select " " (Space) as this usually does the least harm, as opposed to
          * carriage return/new line.
+         * Alternatively, we could select '\x1B' (Escape)
          *
          *
          *
@@ -186,7 +187,7 @@ data class UsbAccessoryData(
 
             return ips[1].split('\n').filter {
                 it.isNotEmpty()
-            }.distinct()
+            }.map { it.split("\t").first() }.distinct()
         }
 
     /**
@@ -195,24 +196,10 @@ data class UsbAccessoryData(
     val services: List<ServiceTypes>
         get() {
             val ret = mutableSetOf<ServiceTypes>()
-            if (model.contains("console", true))
-                ret.add(ServiceTypes.Console)
-            if (model.contains("ssh", true))
-                ret.add(ServiceTypes.SSH)
-            if (model.contains("rfb", true))
-                ret.add(ServiceTypes.RFB)
-            if (model.contains("rdp", true))
-                ret.add(ServiceTypes.RDP)
-            if (model.contains("tls", true))
-                ret.add(ServiceTypes.TLS)
-            if (model.contains("http", true))
-                ret.add(ServiceTypes.HTTP)
-            if (model.contains("mqtt", true))
-                ret.add(ServiceTypes.MQTT)
-            if (model.contains("improvWifi", true))
-                ret.add(ServiceTypes.ImprovWifi)
-            if (model.contains("Cockpit", true))
-                ret.add(ServiceTypes.Cockpit)
+            for (service in ServiceTypes.entries) {
+                if (model.contains(service.name, true))
+                    ret.add(service)
+            }
             return ret.toList()
         }
 
@@ -220,11 +207,9 @@ data class UsbAccessoryData(
         get() {
             return model.split('\n').first()
         }
+
     fun isAOAProxy(): Boolean {
-        if (manufacturer == "aoa-proxy") {
-            return true
-        }
-        return false
+        return manufacturer == "aoa-proxy"
     }
 
     companion object {

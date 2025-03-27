@@ -1,25 +1,23 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.serialization.plugin)
 }
 
 android {
     namespace = "io.github.jo_bitsch.aoa_control"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
-
     defaultConfig {
         applicationId = "io.github.jo_bitsch.aoa_control"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 2
+        targetSdk = 35
+        versionCode = 3
         versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -29,8 +27,13 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
             isMinifyEnabled = false
+        }
+        release {
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -49,35 +52,52 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    dependenciesInfo {
+        includeInApk = true
+        includeInBundle = true
+    }
+    buildToolsVersion = "35.0.0"
+
+//    testOptions {
+//        unitTests {
+//            isIncludeAndroidResources = true
+//        }
+//    }
 }
 
 dependencies {
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation(platform("androidx.compose:compose-bom:2024.05.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    val composeBom = platform("androidx.compose:compose-bom:2024.03.00")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.jsch)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.foundation:foundation")
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.foundation)
 
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.test:core-ktx:1.5.0")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.robolectric:robolectric:4.10.3")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.kotlin.reflect)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.core.ktx)
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+
+    testImplementation(libs.conscrypt.openjdk.uber)
+    implementation(libs.cbor)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.serialization.cbor)
 }

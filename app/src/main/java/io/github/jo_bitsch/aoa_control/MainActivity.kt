@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.hardware.usb.UsbAccessory
 import android.hardware.usb.UsbManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
@@ -32,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import io.github.jo_bitsch.aoa_control.service.AOAProxy
 import io.github.jo_bitsch.aoa_control.ui.DeviceCard
 import io.github.jo_bitsch.aoa_control.ui.theme.AOAControlTheme
@@ -44,7 +44,7 @@ const val ACTION_USB_PERMISSION = "io.github.jo_bitsch.USB_PERMISSION"
 class MainActivity : ComponentActivity() {
 
     private val manager: UsbManager by lazy {
-        getSystemService(Context.USB_SERVICE) as UsbManager
+        getSystemService(USB_SERVICE) as UsbManager
     }
 
     private var usbAccessory: UsbAccessory? = null
@@ -57,16 +57,19 @@ class MainActivity : ComponentActivity() {
                 .build()
         )
 
-        val usbReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        val accessoryRemovedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 if (UsbManager.ACTION_USB_ACCESSORY_DETACHED == intent.action) {
-                    finishAndRemoveTask()
+                    usbAccessory = null
+                    val serviceIntent = Intent(applicationContext, AOAProxy::class.java)
+                    applicationContext.stopService(serviceIntent)
+                    setDiscoveredContent()
                 }
             }
         }
         val filter = IntentFilter(ACTION_USB_PERMISSION)
         filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED)
-        ContextCompat.registerReceiver(applicationContext,usbReceiver,filter,ContextCompat.RECEIVER_NOT_EXPORTED)
+        ContextCompat.registerReceiver(applicationContext,accessoryRemovedReceiver,filter,ContextCompat.RECEIVER_NOT_EXPORTED)
 
 
 
@@ -83,27 +86,39 @@ class MainActivity : ComponentActivity() {
             }
             Log.i("MainActivity", "starting service 1")
             val serviceIntent = Intent(applicationContext, AOAProxy::class.java)
+            manager.openAccessory(usbAccessory).let {
+                serviceIntent.putExtra("fd", it?.detachFd() ?: 0)
+            }
             ContextCompat.startForegroundService(applicationContext, serviceIntent)
         } else {
             val accessoryList: Array<out UsbAccessory>? = manager.accessoryList
             if (accessoryList != null && accessoryList.isNotEmpty()) {
-                val pendingIntent = PendingIntent.getBroadcast(
-                    this,
-                    0,
-                    Intent(ACTION_USB_PERMISSION),
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                        PendingIntent.FLAG_MUTABLE
-                    else
-                        0
-                )
-                val intentFilter = IntentFilter(ACTION_USB_PERMISSION)
-                ContextCompat.registerReceiver(
-                    applicationContext, usbReceiver, intentFilter,
-                    ContextCompat.RECEIVER_NOT_EXPORTED
-                )
-
                 usbAccessory = accessoryList.first()
-                manager.requestPermission(usbAccessory, pendingIntent)
+                if (manager.hasPermission(usbAccessory)) {
+                    Log.i("MainActivity", "starting service 2")
+                    val serviceIntent = Intent(applicationContext, AOAProxy::class.java)
+                    manager.openAccessory(usbAccessory).let {
+                        serviceIntent.putExtra("fd", it?.detachFd() ?: 0)
+                    }
+                    ContextCompat.startForegroundService(applicationContext, serviceIntent)
+                } else {
+                    val pendingIntent = PendingIntent.getBroadcast(
+                        this,
+                        0,
+                        Intent(ACTION_USB_PERMISSION),
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                            PendingIntent.FLAG_IMMUTABLE
+                        else
+                            0
+                    )
+                    val intentFilter = IntentFilter(ACTION_USB_PERMISSION)
+                    ContextCompat.registerReceiver(
+                        applicationContext, usbReceiver, intentFilter,
+                        ContextCompat.RECEIVER_NOT_EXPORTED
+                    )
+                    manager.requestPermission(usbAccessory, pendingIntent)
+
+                }
             } else {
                 usbAccessory = null
             }
@@ -127,7 +142,7 @@ class MainActivity : ComponentActivity() {
                             )
 
                         else -> @Suppress("DEPRECATION")
-                        intent.getParcelableExtra(UsbManager.EXTRA_ACCESSORY)
+                                intent.getParcelableExtra(UsbManager.EXTRA_ACCESSORY)
                     }
 
 
@@ -139,8 +154,11 @@ class MainActivity : ComponentActivity() {
                                 this.javaClass.simpleName,
                                 "permission granted for accessory $accessory"
                             )
-                            Log.i("MainActivity", "starting service 2")
+                            Log.i("MainActivity", "starting service 3")
                             val serviceIntent = Intent(applicationContext, AOAProxy::class.java)
+                            manager.openAccessory(usbAccessory).let {
+                                serviceIntent.putExtra("fd", it?.detachFd() ?: 0)
+                            }
                             ContextCompat.startForegroundService(applicationContext, serviceIntent)
                         }
                     } else {
@@ -184,11 +202,9 @@ fun MainScreen(usbAccessory: UsbAccessoryData? = null) {
                         context.startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(
-                                    "https://github.com/jo-bitsch/aoa-control/blob/" +
-                                            "6f8507c2cb0cf40d6e98ba4b8493d0a271d9853a/" +
-                                            "privacy-policy-2023-07-21.md"
-                                )
+                                ("https://github.com/jo-bitsch/aoa-control/blob/" +
+                                        "6f8507c2cb0cf40d6e98ba4b8493d0a271d9853a/" +
+                                        "privacy-policy-2023-07-21.md").toUri()
                             )
                         )
                     },

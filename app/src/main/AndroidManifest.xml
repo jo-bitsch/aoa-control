@@ -18,7 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AOAControl"
-        tools:targetApi="34">
+        tools:targetApi="35">
+
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
+
         <service
             android:name=".service.AOAProxy"
             android:enabled="true"

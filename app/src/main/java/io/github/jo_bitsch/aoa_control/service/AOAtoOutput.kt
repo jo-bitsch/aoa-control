@@ -31,6 +31,7 @@ class AOAtoOutput(
                             outStream.close()
                             break
                         }
+                        Log.i("DirectedStream","write \"${buffer.decodeToString(0,read)}\"")
                         outStream.write(buffer, 0, read)
                         outStream.flush()
                     }
@@ -39,8 +40,8 @@ class AOAtoOutput(
                     inStream.close()
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Log.i(TAG, "IO exception happened, trying to shut down parent Thread $otherThread")
-                    otherThread?.interrupt()
+                    outStream.close()
+                    inStream.close()
                 } catch (e: NullPointerException){
                     e.printStackTrace()
                 }

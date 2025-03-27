@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -127,7 +128,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        text = "Generic AOA Device",
+                        text = stringResource(R.string.generic_aoa_device),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary,
@@ -135,7 +136,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                 }
                 HorizontalDivider()
                 Text(
-                    text = "Manufacturer".uppercase(),
+                    text = stringResource(R.string.manufacturer).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
@@ -147,7 +148,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                 )
                 HorizontalDivider(thickness = Dp.Hairline)
                 Text(
-                    text = "Model".uppercase(),
+                    text = stringResource(R.string.model).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
@@ -159,32 +160,32 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                 )
                 HorizontalDivider(thickness = Dp.Hairline)
                 Text(
-                    text = "Version".uppercase(),
+                    text = stringResource(R.string.version).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Text(
-                    text = usbAccessory.version ?: "none provided",
+                    text = usbAccessory.version ?: stringResource(R.string.none_provided),
                     softWrap = true,
                     style = MaterialTheme.typography.bodySmall,
                 )
 
                 HorizontalDivider(thickness = Dp.Hairline)
                 Text(
-                    text = "Description".uppercase(),
+                    text = stringResource(R.string.description).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Text(
-                    text = usbAccessory.description ?: "none provided",
+                    text = usbAccessory.description ?: stringResource(R.string.none_provided),
                     softWrap = true,
                     style = MaterialTheme.typography.bodySmall,
                 )
                 HorizontalDivider(thickness = Dp.Hairline)
                 Text(
-                    text = "URI".uppercase(),
+                    text = stringResource(R.string.uri).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
@@ -207,20 +208,20 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                     )
                 }else{
                     Text(
-                        text = "none provided",
+                        text = stringResource(R.string.none_provided),
                         softWrap = true,
                         style = MaterialTheme.typography.bodySmall,
                     )
                 }
                 HorizontalDivider(thickness = Dp.Hairline)
                 Text(
-                    text = "Serial".uppercase(),
+                    text = stringResource(R.string.serial).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Text(
-                    text = usbAccessory.serial ?: "none provided",
+                    text = usbAccessory.serial ?: stringResource(R.string.none_provided),
                     softWrap = true,
                     style = MaterialTheme.typography.bodySmall,
                 )

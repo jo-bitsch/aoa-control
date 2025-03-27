@@ -122,12 +122,12 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                 })
                         }
                     } else {
-                        Text(text = "none provided")
+                        Text(text = stringResource(R.string.none_provided))
                     }
                 }
                 HorizontalDivider(thickness = Dp.Hairline)
                 Text(
-                    text = "Identifiers".uppercase(),
+                    text = stringResource(R.string.identifiers).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
@@ -144,12 +144,12 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                 })
                         }
                     } else {
-                        Text(text = "none provided")
+                        Text(text = stringResource(R.string.none_provided))
                     }
                 }
                 HorizontalDivider(thickness = Dp.Hairline)
                 Text(
-                    text = "IP Addresses".uppercase(),
+                    text = stringResource(R.string.ip_addresses).uppercase(),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 4.dp)
@@ -236,7 +236,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                 })
                         }
                     } else {
-                        Text(text = "none provided")
+                        Text(text = stringResource(R.string.none_provided))
                     }
                 }
                 if (usbAccessory.services.isNotEmpty()){
@@ -253,6 +253,14 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                             Intent(
                                                 Intent.ACTION_VIEW,
                                                 Uri.parse("telnet://127.0.0.1:41120/#aoa-telnet")
+                                            )
+                                        )
+                                    }
+                                    UsbAccessoryData.ServiceTypes.SSH -> {
+                                        context.startActivity(
+                                            Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse("ssh://jo@127.0.0.1:41120/#aoa")
                                             )
                                         )
                                     }

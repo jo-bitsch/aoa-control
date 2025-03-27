@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">AOA Control</string>
     <string name="version">Version</string>
+    <string name="asset_statements" translatable="false">[{ \"include\": \"https://code.xn--j-vga.de/.well-known/assetlinks.json\" }]</string>
+    <string name="identifiers">Identifiers</string>
+    <string name="ip_addresses">IP Addresses</string>
+    <string name="none_provided">none provided</string>
+    <string name="connect_a_device">Connect a device</string>
+    <string name="learn_more">Learn more</string>
+    <string name="generic_aoa_device">Generic AOA Device</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="model">Model</string>
+    <string name="serial">Serial</string>
+    <string name="uri">URI</string>
+    <string name="description">Description</string>
+    <!--
+    if we want to use a different origin, we might need to get into this list: https://www.gstatic.com/gpm-passkeys-privileged-apps/apps.json
+    Application form is https://developer.android.com/identity/sign-in/privileged-apps
+    -->
 </resources>
