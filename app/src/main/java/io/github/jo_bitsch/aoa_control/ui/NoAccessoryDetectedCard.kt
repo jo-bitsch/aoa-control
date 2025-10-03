@@ -1,7 +1,6 @@
 package io.github.jo_bitsch.aoa_control.ui
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import io.github.jo_bitsch.aoa_control.R
 
 @Preview
@@ -76,9 +76,7 @@ fun NoAccessoryDetectedCard() {
                         context.startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(
-                                    "https://jo-bitsch.github.io/aoa-control/"
-                                )
+                                "https://jo-bitsch.github.io/aoa-control/".toUri()
                             )
                         )
 

@@ -1,7 +1,6 @@
 package io.github.jo_bitsch.aoa_control.utils
 
 import android.hardware.usb.UsbAccessory
-import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData.ServiceTypes
 
 
 /**
@@ -229,7 +228,7 @@ data class UsbAccessoryData(
                     uri,
                     try {
                         serial
-                    } catch (e: SecurityException) {
+                    } catch (_: SecurityException) {
                         null
                     }
                 )

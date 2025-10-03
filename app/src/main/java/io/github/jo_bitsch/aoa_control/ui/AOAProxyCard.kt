@@ -1,7 +1,6 @@
 package io.github.jo_bitsch.aoa_control.ui
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,6 +36,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import io.github.jo_bitsch.aoa_control.R
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 
@@ -180,9 +180,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                                 context.startActivity(
                                                     Intent(
                                                         Intent.ACTION_VIEW,
-                                                        Uri.parse(
-                                                            "http://${ipAddress}/"
-                                                        )
+                                                        "http://${ipAddress}/".toUri()
                                                     )
                                                 )
                                             }
@@ -195,9 +193,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                                 context.startActivity(
                                                     Intent(
                                                         Intent.ACTION_VIEW,
-                                                        Uri.parse(
-                                                            "https://${ipAddress}/"
-                                                        )
+                                                        "https://${ipAddress}/".toUri()
                                                     )
                                                 )
                                             }
@@ -210,9 +206,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                                 context.startActivity(
                                                     Intent(
                                                         Intent.ACTION_VIEW,
-                                                        Uri.parse(
-                                                            "http://${ipAddress}:9090/"
-                                                        )
+                                                        "http://${ipAddress}:9090/".toUri()
                                                     )
                                                 )
                                             }
@@ -225,9 +219,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                                 context.startActivity(
                                                     Intent(
                                                         Intent.ACTION_VIEW,
-                                                        Uri.parse(
-                                                            "ssh://${ipAddress}:22/#aoa"
-                                                        )
+                                                        "ssh://${ipAddress}:22/#aoa".toUri()
                                                     )
                                                 )
                                             }
@@ -252,7 +244,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                         context.startActivity(
                                             Intent(
                                                 Intent.ACTION_VIEW,
-                                                Uri.parse("telnet://127.0.0.1:41120/#aoa-telnet")
+                                                "telnet://127.0.0.1:41120/#aoa-telnet".toUri()
                                             )
                                         )
                                     }
@@ -260,7 +252,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                         context.startActivity(
                                             Intent(
                                                 Intent.ACTION_VIEW,
-                                                Uri.parse("ssh://jo@127.0.0.1:41120/#aoa")
+                                                "ssh://jo@127.0.0.1:41120/#aoa".toUri()
                                             )
                                         )
                                     }

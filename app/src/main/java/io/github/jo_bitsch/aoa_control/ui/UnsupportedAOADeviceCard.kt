@@ -1,7 +1,6 @@
 package io.github.jo_bitsch.aoa_control.ui
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +29,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import io.github.jo_bitsch.aoa_control.R
 import io.github.jo_bitsch.aoa_control.utils.UsbAccessoryData
 
@@ -201,7 +201,7 @@ fun UnsupportedAOADeviceCard(@PreviewParameter(UnsupportedAOADeviceCardSamplePro
                             context.startActivity(
                                 Intent(
                                     Intent.ACTION_VIEW,
-                                    Uri.parse(usbAccessory.uri)
+                                    usbAccessory.uri.toUri()
                                 )
                             )
                         }

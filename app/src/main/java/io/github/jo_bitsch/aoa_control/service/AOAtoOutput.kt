@@ -35,7 +35,7 @@ class AOAtoOutput(
                         outStream.write(buffer, 0, read)
                         outStream.flush()
                     }
-                } catch (e: SocketException){
+                } catch (_: SocketException){
                     outStream.close()
                     inStream.close()
                 } catch (e: IOException) {

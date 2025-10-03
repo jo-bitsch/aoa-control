@@ -156,7 +156,7 @@ class AOAProxy : Service() {
     }
 
     override fun onDestroy() {
-        connectabble = false
+        connectable = false
         running = false
     }
 
@@ -172,7 +172,7 @@ class AOAProxy : Service() {
             )
             chan.lightColor = Color.BLUE
             chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-            val manager = (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+            val manager = (getSystemService(NOTIFICATION_SERVICE) as NotificationManager)
             manager.createNotificationChannel(chan)
             val notificationBuilder = NotificationCompat.Builder(this, notificationChannelId)
             val notification = notificationBuilder.setOngoing(true)
@@ -201,6 +201,6 @@ class AOAProxy : Service() {
         private const val PORT =
             0xA0A0  // almost spells out aoa0, currently unassigned port according to IANA and wikipedia
         var running = false
-        var connectabble = false
+        var connectable = false
     }
 }
