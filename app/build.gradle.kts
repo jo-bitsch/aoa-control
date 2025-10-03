@@ -7,17 +7,18 @@ plugins {
 
 android {
     namespace = "io.github.jo_bitsch.aoa_control"
-    compileSdk = 35
+    compileSdk = 36
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     defaultConfig {
         applicationId = "io.github.jo_bitsch.aoa_control"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 3
+        targetSdk = 36
+        versionCode = 4
         versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -41,11 +42,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        jvmToolchain(17)
     }
     packaging {
         resources {
@@ -56,7 +57,7 @@ android {
         includeInApk = true
         includeInBundle = true
     }
-    buildToolsVersion = "35.0.0"
+    buildToolsVersion = "36.1.0"
 
 //    testOptions {
 //        unitTests {
@@ -70,7 +71,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
+    ///implementation(libs.androidx.ui.graphics)
     implementation(libs.jsch)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)

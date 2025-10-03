@@ -13,6 +13,7 @@ import android.os.StrictMode
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -50,6 +51,7 @@ class MainActivity : ComponentActivity() {
     private var usbAccessory: UsbAccessory? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         StrictMode.setVmPolicy(
             StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy())
