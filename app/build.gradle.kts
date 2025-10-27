@@ -5,6 +5,13 @@ plugins {
     alias(libs.plugins.serialization.plugin)
 }
 
+fun String.runCommand(): String = providers.exec {
+    commandLine(split("\\s(?=(?:[^'\"`]*(['\"`])[^'\"`]*\\1)*[^'\"`]*$)".toRegex()))
+    isIgnoreExitValue = true
+}.standardOutput.asText.get().trim()
+
+val mockitoAgent = configurations.create("mockitoAgent")
+
 android {
     namespace = "io.github.jo_bitsch.aoa_control"
     compileSdk = 36
@@ -18,8 +25,9 @@ android {
         applicationId = "io.github.jo_bitsch.aoa_control"
         minSdk = 24
         targetSdk = 36
-        versionCode = 4
-        versionName = "0.0.1"
+
+        versionCode = "git rev-list --count main".runCommand().ifEmpty { "1" }.toInt()
+        versionName = "git describe --tags --long --dirty --match=v[0-9]*".runCommand().ifEmpty { "unknown" }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -41,29 +49,47 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
+
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(21)
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+
+        jniLibs {
+            // as the following dependency is distributed already stripped,
+            // mark it to suppress the warning:
+            // "Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so"
+            keepDebugSymbols += "**/libandroidx.graphics.path.so"
+        }
     }
+
     dependenciesInfo {
         includeInApk = true
         includeInBundle = true
     }
+
     buildToolsVersion = "36.1.0"
 
-//    testOptions {
-//        unitTests {
+
+    testOptions {
+        unitTests {
 //            isIncludeAndroidResources = true
-//        }
-//    }
+
+            //isReturnDefaultValues = true
+            all { test ->
+                test.jvmArgs("-javaagent:${mockitoAgent.asPath}")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -101,4 +127,6 @@ dependencies {
     implementation(libs.cbor)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.serialization.cbor)
+
+    mockitoAgent(libs.mockito) {isTransitive = false}
 }

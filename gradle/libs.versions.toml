@@ -3,11 +3,11 @@ agp = "8.13.0"
 cbor = "1.20"
 conscryptOpenjdkUber = "2.5.2"
 credentials = "1.5.0"
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 kotlinReflect = "2.2.0"
 activityCompose = "1.11.0"
 appcompat = "1.7.1"
-composeBom = "2025.10.00"
+composeBom = "2025.10.01"
 coreKtx = "1.17.0"
 coreKtxVersion = "1.7.0"
 espressoCore = "3.7.0"
@@ -18,9 +18,10 @@ kotlinxSerialization = "1.9.0"
 lifecycleRuntimeKtx = "2.9.4"
 material = "1.13.0"
 mockitoKotlin = "6.1.0"
+mockito = "5.20.0"
 robolectric = "4.16"
-jsch = "2.27.3"
-serializationPlugin = "2.2.20"
+jsch = "2.27.5"
+serializationPlugin = "2.2.21"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -50,6 +51,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "kotlinxSerialization" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 jsch = {module = "com.github.mwiede:jsch", version.ref = "jsch"}
 
