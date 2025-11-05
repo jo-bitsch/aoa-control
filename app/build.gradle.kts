@@ -10,7 +10,10 @@ fun String.runCommand(): String = providers.exec {
     isIgnoreExitValue = true
 }.standardOutput.asText.get().trim()
 
-val mockitoAgent = configurations.create("mockitoAgent")
+val mockitoAgent: Configuration by configurations.creating {
+    isTransitive = false
+    isCanBeConsumed = true
+}
 
 android {
     namespace = "io.github.jo_bitsch.aoa_control"
