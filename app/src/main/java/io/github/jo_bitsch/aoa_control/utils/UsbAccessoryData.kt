@@ -4,7 +4,7 @@ import android.hardware.usb.UsbAccessory
 
 
 /**
- * Support class to parse the announced properties of an USB attached Linux device communicating via
+ * Support class to parse the announced properties of a USB attached Linux device communicating via
  * the AOAv1 and AOAv2 protocol.
  *
  * The corresponding linux tool can be found here: https://github.com/jo-bitsch/aoa-proxy/
@@ -55,8 +55,8 @@ data class UsbAccessoryData(
      * URI pointing to information about the device. Maximum 255 bytes.
      *
      * There will be a link in the Android system UI, even when this App is not installed yet, so
-     * this is a great resource for onboarding without change of medium, such as pointing to an
-     * explainer website or the App Store.
+     * this is a great resource for onboarding without change of medium. This could be pointing to
+     * an explainer website or the App Store.
      *
      * We currently recommend: "https://github.com/jo-bitsch/aoa-proxy/"
      */
@@ -76,7 +76,7 @@ data class UsbAccessoryData(
     /**
      * The Android Open Accessory might support multiple services. The Android device could be used
      * as a screen as if it was plugged via HDMI by using RFB or RDP protocol. We could simply
-     * inject wifi credentials or connect to SSH and from there on to any number of services, such
+     * inject Wi-Fi credentials or connect to SSH and from there on to any number of services, such
      * as Cockpit (https://cockpit-project.org/). A direct connection to a TLS or HTTP socket can
      * also be established.
      *

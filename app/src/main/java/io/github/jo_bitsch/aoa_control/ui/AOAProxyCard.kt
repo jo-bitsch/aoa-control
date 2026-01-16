@@ -12,13 +12,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lan
+import androidx.compose.material.icons.filled.SimCard
+import androidx.compose.material.icons.filled.SystemSecurityUpdateGood
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,10 +53,10 @@ class AOAProxyDeviceCardSampleProvider : PreviewParameterProvider<UsbAccessoryDa
                 UsbAccessoryData(
                     "aoa-proxy",
                     "Raspberry Pi v4\nconsole\nssh\nrfb",
-                    "Ubuntu 23.04\nLinux 6.2.0-26-generic",
-                    "description\nIP: 192.168.0.1",
+                    "Raspberry Pi OS (Trixie)\nLinux 6.12.y",
+                    "Raspberry Pi v4\nIP: 192.168.0.1\n",
                     "uri",
-                    "123456U5678"
+                    "100000007184bc7e\ndc:a6:32:01:23:45"
                 ),
                 UsbAccessoryData(
                     "aoa-proxy",
@@ -74,7 +80,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            val color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
+            val color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
             Image(
                 painterResource(id = R.drawable.usb_3),
                 null,
@@ -113,8 +119,9 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     if (usbAccessory.version != null) {
-                        for (version in usbAccessory.version.split("\n")) {
+                        for (version in usbAccessory.version.split("\n").filter { it.isNotEmpty() }) {
                             AssistChip(
+                                leadingIcon = { Icon(Icons.Default.SystemSecurityUpdateGood, null, Modifier.size(18.dp)) },
                                 onClick = {
                                           },
                                 label = {
@@ -136,12 +143,20 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     if (usbAccessory.serial != null) {
-                        for (ids in usbAccessory.serial.split("\n")) {
+                        for (ids in usbAccessory.serial.split("\n").filter { it.isNotEmpty() }) {
                             AssistChip(
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Default.SimCard,
+                                        null,
+                                        Modifier
+                                            .size(18.dp)
+                                    )},
                                 onClick = { /*TODO*/ },
                                 label = {
                                     Text(text = ids)
-                                })
+                                },
+                            )
                         }
                     } else {
                         Text(text = stringResource(R.string.none_provided))
@@ -166,6 +181,7 @@ fun AOAProxyCard(@PreviewParameter(AOAProxyDeviceCardSampleProvider::class) usbA
                                 onClick = {
                                     expanded.value = true
                                 },
+                                leadingIcon = { Icon(Icons.Default.Lan, "LAN", Modifier.size(18.dp)) },
                                 label = {
                                     Text(text = ipAddress)
                                     DropdownMenu(

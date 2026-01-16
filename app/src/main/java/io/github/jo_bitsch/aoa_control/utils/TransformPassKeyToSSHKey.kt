@@ -28,7 +28,7 @@ fun PublicKeyCredential.sshSignature(
     val s = SSHWebauthnSkEcdsaSha2Nistp256Signature(
         r.response.signature,
         r.response.authenticatorData.flags,
-        r.response.authenticatorData.counter.toInt(),
+        r.response.authenticatorData.counter,
         origin,
         r.response.clientDataJSON,
         r.response.authenticatorData.extensions
