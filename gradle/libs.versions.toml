@@ -1,13 +1,13 @@
 [versions]
-agp = "9.0.0"
+agp = "9.0.1"
 cbor = "1.21"
 conscryptOpenjdkUber = "2.5.2"
 credentials = "1.5.0"
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 kotlinReflect = "2.3.0"
-activityCompose = "1.12.3"
+activityCompose = "1.12.4"
 appcompat = "1.7.1"
-composeBom = "2026.01.01"
+composeBom = "2026.02.00"
 coreKtx = "1.17.0"
 coreKtxVersion = "1.7.0"
 espressoCore = "3.7.0"
@@ -22,7 +22,7 @@ mockitoKotlin = "6.2.3"
 mockito = "5.21.0"
 robolectric = "4.16.1"
 jsch = "2.27.7"
-serializationPlugin = "2.3.0"
+serializationPlugin = "2.3.10"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
