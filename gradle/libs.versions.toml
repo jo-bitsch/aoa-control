@@ -2,7 +2,7 @@
 agp = "9.1.0"
 cbor = "1.21"
 conscryptOpenjdkUber = "2.5.2"
-credentials = "1.5.0"
+credentials = "1.6.0"
 kotlin = "2.3.20"
 kotlinReflect = "2.3.0"
 activityCompose = "1.13.0"
@@ -21,7 +21,7 @@ materialIconsExtended = "1.7.8"
 mockitoKotlin = "6.3.0"
 mockito = "5.23.0"
 robolectric = "4.16.1"
-jsch = "2.27.9"
+jsch = "2.28.0"
 serializationPlugin = "2.3.20"
 
 [libraries]
