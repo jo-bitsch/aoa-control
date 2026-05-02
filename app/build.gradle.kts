@@ -16,7 +16,7 @@ val mockitoAgent: Configuration by configurations.creating {
 
 android {
     namespace = "io.github.jo_bitsch.aoa_control"
-    compileSdk = 36
+    compileSdk = 37
 
     buildFeatures {
         compose = true
@@ -26,7 +26,7 @@ android {
     defaultConfig {
         applicationId = "io.github.jo_bitsch.aoa_control"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
 
         versionCode = "git rev-list --count main".runCommand().ifEmpty { "1" }.toInt()
         versionName = "git describe --tags --long --dirty --match=v[0-9]*".runCommand().ifEmpty { "unknown" }
@@ -45,6 +45,7 @@ android {
         }
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
