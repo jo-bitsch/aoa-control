@@ -9,7 +9,7 @@ fun String.runCommand(): String = providers.exec {
     isIgnoreExitValue = true
 }.standardOutput.asText.get().trim()
 
-val mockitoAgent: Configuration by configurations.creating {
+val mockitoAgent = configurations.register("mockitoAgent") {
     isTransitive = false
     isCanBeConsumed = true
 }
@@ -85,7 +85,7 @@ android {
 
             //isReturnDefaultValues = true
             all { test ->
-                test.jvmArgs("-javaagent:${mockitoAgent.asPath}")
+                test.jvmArgs("-javaagent:${mockitoAgent.get().asPath}")
             }
         }
     }
