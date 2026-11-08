@@ -1,7 +1,7 @@
 [versions]
-agp = "9.5.0"
+agp = "9.5.1"
 cbor = "1.21"
-conscryptOpenjdkUber = "2.8.0"
+conscryptOpenjdkUber = "2.9.0"
 credentials = "1.6.0"
 kotlin = "2.4.21"
 kotlinReflect = "2.4.10"
