@@ -16,7 +16,11 @@ val mockitoAgent = configurations.register("mockitoAgent") {
 
 android {
     namespace = "io.github.jo_bitsch.aoa_control"
-    compileSdk = 37
+    compileSdk {
+        release(37) {
+            minorApiLevel = 2
+        }
+    }
 
     buildFeatures {
         compose = true
